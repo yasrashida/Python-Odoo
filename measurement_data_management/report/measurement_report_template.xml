@@ -1,0 +1,115 @@
+<odoo>
+    <!-- Report Action -->
+    <record id="action_measurement_device_report" model="ir.actions.report">
+        <field name="name">Device Measurement Report</field>
+        <field name="model">measurement.device</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">measurement_data_management.measurement_device_report</field>
+        <field name="report_file">measurement_data_management.measurement_device_report</field>
+        <field name="binding_model_id" ref="model_measurement_device"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Report Template -->
+    <template id="measurement_device_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="device">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Measurement Device Report</h2>
+                                <h3 t-field="device.name"/>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt16">
+                            <div class="col-6">
+                                <strong>Device Information:</strong>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td>Serial Number:</td>
+                                        <td t-field="device.serial_number"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Type:</td>
+                                        <td t-field="device.device_type"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Manufacturer:</td>
+                                        <td t-field="device.manufacturer"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Model:</td>
+                                        <td t-field="device.model"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Location:</td>
+                                        <td t-field="device.location"/>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <strong>Specifications:</strong>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td>Measurement Unit:</td>
+                                        <td t-field="device.measurement_unit"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Range:</td>
+                                        <td><span t-field="device.min_range"/> - <span t-field="device.max_range"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Accuracy:</td>
+                                        <td><span t-field="device.accuracy"/> <span t-field="device.accuracy_unit"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last Calibration:</td>
+                                        <td t-field="device.calibration_date"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Next Calibration:</td>
+                                        <td t-field="device.next_calibration_date"/>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt16" t-if="device.measurement_record_ids">
+                            <div class="col-12">
+                                <strong>Recent Measurements (Last 20):</strong>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Value</th>
+                                            <th>Unit</th>
+                                            <th>Quality</th>
+                                            <th>Operator</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="device.measurement_record_ids[:20]" t-as="record">
+                                            <tr>
+                                                <td t-field="record.measurement_date"/>
+                                                <td t-field="record.value"/>
+                                                <td t-field="record.unit"/>
+                                                <td t-field="record.quality_status"/>
+                                                <td t-field="record.operator"/>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

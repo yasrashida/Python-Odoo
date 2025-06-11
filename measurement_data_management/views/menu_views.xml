@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_measurement_main" 
+          name="Measurements" 
+          sequence="50"/>
+    
+    <!-- Device Management -->
+    <menuitem id="menu_measurement_devices" 
+              name="Devices" 
+              parent="menu_measurement_main" 
+              sequence="10" 
+              action="action_measurement_device"/>
+    
+    <!-- Measurement Records -->
+    <menuitem id="menu_measurement_records" 
+              name="Records" 
+              parent="menu_measurement_main" 
+              sequence="20" 
+              action="action_measurement_record"/>
+    
+    <!-- Import Data -->
+    <menuitem id="menu_measurement_import" 
+              name="Import Data" 
+              parent="menu_measurement_main" 
+              sequence="30" 
+              action="action_measurement_import_wizard"/>
+    
+    <!-- Configuration Menu -->
+    <menuitem id="menu_measurement_config" 
+              name="Configuration" 
+              parent="menu_measurement_main" 
+              sequence="90"/>
+    
+</odoo>

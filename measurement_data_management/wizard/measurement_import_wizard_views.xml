@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import Wizard Form View -->
+    <record id="view_measurement_import_wizard_form" model="ir.ui.view">
+        <field name="name">measurement.import.wizard.form</field>
+        <field name="model">measurement.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Measurement Data">
+                <header>
+                    <button name="action_preview" type="object" string="Preview" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_import" type="object" string="Import" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'preview')]}"/>
+                    <button name="action_view_imported_records" type="object" string="View Imported Records" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,preview,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    
+                    <group attrs="{'invisible': [('state', '=', 'done')]}">
+                        <group name="file_info">
+                            <field name="csv_file" filename="filename"/>
+                            <field name="filename" invisible="1"/>
+                            <field name="delimiter"/>
+                            <field name="has_header"/>
+                        </group>
+                        <group name="defaults">
+                            <field name="device_id" options="{'no_create': True}"/>
+                            <field name="unit"/>
+                            <field name="operator"/>
+                        </group>
+                    </group>
+                    
+                    <div attrs="{'invisible': [('preview_data', '=', False)]}">
+                        <separator string="Preview Data"/>
+                        <field name="preview_data" nolabel="1" readonly="1" widget="text"/>
+                    </div>
+                    
+                    <div attrs="{'invisible': [('import_summary', '=', False)]}">
+                        <separator string="Import Summary"/>
+                        <field name="import_summary" nolabel="1" readonly="1" widget="text"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Import Wizard Action -->
+    <record id="action_measurement_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import Measurement Data</field>
+        <field name="res_model">measurement.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_measurement_import_wizard_form"/>
+    </record>
+</odoo>

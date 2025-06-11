@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Sequence for Measurement Records -->
+        <record id="seq_measurement_record" model="ir.sequence">
+            <field name="name">Measurement Record</field>
+            <field name="code">measurement.record</field>
+            <field name="prefix">MR</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Measurement Devices -->
+        <record id="seq_measurement_device" model="ir.sequence">
+            <field name="name">Measurement Device</field>
+            <field name="code">measurement.device</field>
+            <field name="prefix">MD</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Import Sessions -->
+        <record id="seq_measurement_import" model="ir.sequence">
+            <field name="name">Measurement Import Session</field>
+            <field name="code">measurement.import</field>
+            <field name="prefix">IMP</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

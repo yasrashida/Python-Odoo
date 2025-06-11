@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- Measurement Record Tree View -->
+    <record id="view_measurement_record_tree" model="ir.ui.view">
+        <field name="name">measurement.record.tree</field>
+        <field name="model">measurement.record</field>
+        <field name="arch" type="xml">
+            <tree string="Measurement Records" sample="1" decoration-danger="quality_status == 'out_of_range'" decoration-warning="quality_status == 'warning'">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="measurement_date"/>
+                <field name="value"/>
+                <field name="unit"/>
+                <field name="quality_status" widget="badge" decoration-success="quality_status == 'good'" decoration-warning="quality_status == 'warning'" decoration-danger="quality_status in ('critical', 'out_of_range')"/>
+                <field name="operator"/>
+                <field name="measurement_type" widget="badge"/>
+                <field name="is_validated" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Measurement Record Form View -->
+    <record id="view_measurement_record_form" model="ir.ui.view">
+        <field name="name">measurement.record.form</field>
+        <field name="model">measurement.record</field>
+        <field name="arch" type="xml">
+            <form string="Measurement Record">
+                <header>
+                    <button name="action_validate" type="object" string="Validate" class="oe_highlight" attrs="{'invisible': [('is_validated', '=', True)]}"/>
+                    <button name="action_invalidate" type="object" string="Remove Validation" attrs="{'invisible': [('is_validated', '=', False)]}"/>
+                    <field name="quality_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group name="measurement_info">
+                            <field name="device_id" options="{'no_create': True}"/>
+                            <field name="measurement_date"/>
+                            <field name="value"/>
+                            <field name="unit"/>
+                            <field name="operator"/>
+                            <field name="measurement_type"/>
+                        </group>
+                        <group name="validation_info">
+                            <field name="is_validated"/>
+                            <field name="validated_by" attrs="{'invisible': [('is_validated', '=', False)]}"/>
+                            <field name="validated_date" attrs="{'invisible': [('is_validated', '=', False)]}"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Environmental Conditions" name="conditions">
+                            <group>
+                                <group>
+                                    <field name="temperature"/>
+                                    <field name="humidity"/>
+                                </group>
+                                <group>
+                                    <field name="batch_id"/>
+                                    <field name="import_session_id" readonly="1" attrs="{'invisible': [('import_session_id', '=', False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                        <page string="Attachments" name="attachments">
+                            <field name="attachment_ids" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Measurement Record Search View -->
+    <record id="view_measurement_record_search" model="ir.ui.view">
+        <field name="name">measurement.record.search</field>
+        <field name="model">measurement.record</field>
+        <field name="arch" type="xml">
+            <search string="Search Measurements">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="operator"/>
+                <field name="value"/>
+                <filter string="Today" name="today" domain="[('measurement_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')), ('measurement_date', '&lt;=', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                <filter string="This Week" name="this_week" domain="[('measurement_date', '&gt;=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter string="This Month" name="this_month" domain="[('measurement_date', '&gt;=', context_today().strftime('%Y-%m-01 00:00:00'))]"/>
+                <separator/>
+                <filter string="Manual Entry" name="manual" domain="[('measurement_type', '=', 'manual')]"/>
+                <filter string="Imported" name="imported" domain="[('measurement_type', '=', 'imported')]"/>
+                <separator/>
+                <filter string="Validated" name="validated" domain="[('is_validated', '=', True)]"/>
+                <filter string="Not Validated" name="not_validated" domain="[('is_validated', '=', False)]"/>
+                <separator/>
+                <filter string="Good Quality" name="good_quality" domain="[('quality_status', '=', 'good')]"/>
+                <filter string="Warning" name="warning_quality" domain="[('quality_status', '=', 'warning')]"/>
+                <filter string="Out of Range" name="out_of_range" domain="[('quality_status', '=', 'out_of_range')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Device" name="group_device" context="{'group_by': 'device_id'}"/>
+                    <filter string="Quality Status" name="group_quality" context="{'group_by': 'quality_status'}"/>
+                    <filter string="Measurement Type" name="group_type" context="{'group_by': 'measurement_type'}"/>
+                    <filter string="Operator" name="group_operator" context="{'group_by': 'operator'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'measurement_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Measurement Record Action -->
+    <record id="action_measurement_record" model="ir.actions.act_window">
+        <field name="name">Measurement Records</field>
+        <field name="res_model">measurement.record</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_measurement_record_search"/>
+        <field name="context">{'search_default_this_month': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record your first measurement!
+            </p>
+            <p>
+                Track measurement data from your devices manually or import from CSV files.
+            </p>
+        </field>
+    </record>
+
+</odoo>

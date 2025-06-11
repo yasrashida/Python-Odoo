@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_measurement_device_user,measurement.device.user,model_measurement_device,base.group_user,1,1,1,0
+access_measurement_device_manager,measurement.device.manager,model_measurement_device,base.group_system,1,1,1,1
+access_measurement_record_user,measurement.record.user,model_measurement_record,base.group_user,1,1,1,0
+access_measurement_record_manager,measurement.record.manager,model_measurement_record,base.group_system,1,1,1,1
+access_measurement_import_wizard,measurement.import.wizard,model_measurement_import_wizard,base.group_user,1,1,1,1

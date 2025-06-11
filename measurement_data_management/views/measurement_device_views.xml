@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Measurement Device Tree View -->
+    <record id="view_measurement_device_tree" model="ir.ui.view">
+        <field name="name">measurement.device.tree</field>
+        <field name="model">measurement.device</field>
+        <field name="arch" type="xml">
+            <tree string="Measurement Devices" sample="1">
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="device_type"/>
+                <field name="manufacturer"/>
+                <field name="location"/>
+                <field name="record_count"/>
+                <field name="last_measurement_date"/>
+                <field name="calibration_date"/>
+                <field name="next_calibration_date" decoration-danger="next_calibration_date &lt; current_date"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Measurement Device Form View -->
+    <record id="view_measurement_device_form" model="ir.ui.view">
+        <field name="name">measurement.device.form</field>
+        <field name="model">measurement.device</field>
+        <field name="arch" type="xml">
+            <form string="Measurement Device">
+                <header>
+                    <button name="action_view_measurements" type="object" string="View Measurements" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_measurements" type="object" class="oe_stat_button" icon="fa-line-chart">
+                            <field name="record_count" widget="statinfo" string="Records"/>
+                        </button>
+                    </div>
+                    
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Device Name"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group name="basic_info">
+                            <field name="serial_number"/>
+                            <field name="device_type"/>
+                            <field name="manufacturer"/>
+                            <field name="model"/>
+                            <field name="location"/>
+                            <field name="active"/>
+                            <field name="last_measurement_date"/>
+                        </group>
+                        <group name="specifications">
+                            <field name="measurement_unit"/>
+                            <field name="min_range"/>
+                            <field name="max_range"/>
+                            <field name="accuracy"/>
+                            <field name="accuracy_unit"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Calibration" name="calibration">
+                            <group>
+                                <group>
+                                    <field name="calibration_date"/>
+                                    <field name="calibration_interval"/>
+                                </group>
+                                <group>
+                                    <field name="next_calibration_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                        <page string="Measurements" name="measurements">
+                            <field name="measurement_record_ids" nolabel="1">
+                                <tree limit="10" create="false">
+                                    <field name="name"/>
+                                    <field name="measurement_date"/>
+                                    <field name="value"/>
+                                    <field name="unit"/>
+                                    <field name="quality_status" widget="badge"/>
+                                    <field name="operator"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Measurement Device Search View -->
+    <record id="view_measurement_device_search" model="ir.ui.view">
+        <field name="name">measurement.device.search</field>
+        <field name="model">measurement.device</field>
+        <field name="arch" type="xml">
+            <search string="Search Devices">
+                <field name="name" string="Device" filter_domain="['|', ('name', 'ilike', self), ('serial_number', 'ilike', self)]"/>
+                <field name="device_type"/>
+                <field name="manufacturer"/>
+                <field name="location"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <filter string="Calibration Due" name="calibration_due" domain="[('next_calibration_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Temperature Sensors" name="temperature" domain="[('device_type', '=', 'temperature')]"/>
+                <filter string="Pressure Sensors" name="pressure" domain="[('device_type', '=', 'pressure')]"/>
+                <filter string="Distance Sensors" name="distance" domain="[('device_type', '=', 'distance')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Device Type" name="group_device_type" context="{'group_by': 'device_type'}"/>
+                    <filter string="Manufacturer" name="group_manufacturer" context="{'group_by': 'manufacturer'}"/>
+                    <filter string="Location" name="group_location" context="{'group_by': 'location'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Measurement Device Action -->
+    <record id="action_measurement_device" model="ir.actions.act_window">
+        <field name="name">Measurement Devices</field>
+        <field name="res_model">measurement.device</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_measurement_device_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first measurement device!
+            </p>
+            <p>
+                Add devices like temperature sensors, pressure gauges, or distance meters
+                to start tracking measurement data.
+            </p>
+        </field>
+    </record>
+
+</odoo>

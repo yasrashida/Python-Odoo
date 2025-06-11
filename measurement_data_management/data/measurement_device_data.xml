@@ -1,0 +1,53 @@
+
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Devices -->
+        <record id="device_temp_001" model="measurement.device">
+            <field name="name">Temperature Sensor Lab-001</field>
+            <field name="serial_number">TS-2024-001</field>
+            <field name="device_type">temperature</field>
+            <field name="manufacturer">Micro-Epsilon</field>
+            <field name="model">ThermoME-150</field>
+            <field name="location">Production Line A</field>
+            <field name="measurement_unit">°C</field>
+            <field name="min_range">-40</field>
+            <field name="max_range">150</field>
+            <field name="accuracy">0.1</field>
+            <field name="accuracy_unit">°C</field>
+            <field name="calibration_date">2024-01-15</field>
+            <field name="calibration_interval">365</field>
+        </record>
+        
+        <record id="device_pressure_001" model="measurement.device">
+            <field name="name">Pressure Sensor QC-001</field>
+            <field name="serial_number">PS-2024-001</field>
+            <field name="device_type">pressure</field>
+            <field name="manufacturer">Micro-Epsilon</field>
+            <field name="model">PressureME-500</field>
+            <field name="location">Quality Control</field>
+            <field name="measurement_unit">bar</field>
+            <field name="min_range">0</field>
+            <field name="max_range">500</field>
+            <field name="accuracy">0.5</field>
+            <field name="accuracy_unit">bar</field>
+            <field name="calibration_date">2024-02-01</field>
+            <field name="calibration_interval">180</field>
+        </record>
+        
+        <record id="device_distance_001" model="measurement.device">
+            <field name="name">Distance Sensor Prod-001</field>
+            <field name="serial_number">DS-2024-001</field>
+            <field name="device_type">distance</field>
+            <field name="manufacturer">Micro-Epsilon</field>
+            <field name="model">OptoNCDT-1320</field>
+            <field name="location">Assembly Station 3</field>
+            <field name="measurement_unit">mm</field>
+            <field name="min_range">0.2</field>
+            <field name="max_range">10</field>
+            <field name="accuracy">0.001</field>
+            <field name="accuracy_unit">mm</field>
+            <field name="calibration_date">2024-01-30</field>
+            <field name="calibration_interval">365</field>
+        </record>
+    </data>
+</odoo>
