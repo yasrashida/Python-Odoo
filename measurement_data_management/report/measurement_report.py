@@ -73,7 +73,7 @@ class MeasurementReport(models.AbstractModel):
             
             device_data = {
                 'device': device,
-                'recent_measurements': recent_measurements[:50],  # Limit to 50 for report
+                'recent_measurements': recent_measurements[:50],
                 'statistics': statistics,
                 'quality_counts': quality_counts,
                 'operator_counts': operator_counts,
@@ -236,15 +236,12 @@ class MeasurementAnalysisWizard(models.TransientModel):
     
     def _generate_detailed_report(self, records):
         """Generate detailed analysis report"""
-        # Implementation for detailed report
         pass
     
     def _generate_quality_report(self, records):
         """Generate quality analysis report"""
-        # Implementation for quality report
         pass
     
     def _generate_trends_report(self, records):
         """Generate trends analysis report"""
-        # Implementation for trends report
         pass

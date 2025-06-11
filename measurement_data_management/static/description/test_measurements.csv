@@ -1,0 +1,10 @@
+device,date,value,unit,operator,notes
+Temperature Sensor Lab-001,2024-06-10 08:00:00,22.5,°C,John Doe,Morning calibration
+Temperature Sensor Lab-001,2024-06-10 12:00:00,25.8,°C,John Doe,Midday reading
+Temperature Sensor Lab-001,2024-06-10 16:00:00,24.2,°C,Jane Smith,Afternoon check
+Pressure Sensor QC-001,2024-06-10 09:15:00,245.6,bar,Bob Wilson,QC test batch A
+Pressure Sensor QC-001,2024-06-10 11:30:00,248.9,bar,Alice Brown,QC test batch B
+Pressure Sensor QC-001,2024-06-10 14:45:00,251.2,bar,Charlie Davis,QC test batch C
+Distance Sensor Prod-001,2024-06-10 10:20:00,5.123,mm,Eva Green,Assembly line 1
+Distance Sensor Prod-001,2024-06-10 13:40:00,5.087,mm,Frank Miller,Assembly line 1
+Distance Sensor Prod-001,2024-06-10 15:55:00,5.156,mm,Grace Taylor,Assembly line 1

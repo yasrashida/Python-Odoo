@@ -1,22 +1,20 @@
 {
     'name': 'Measurement Data Management',
-    'version': '16.0.1.0.0',
+    'version': '16.0.0.0.0',
     'category': 'Manufacturing',
-    'summary': 'Manage measurement data from devices with CSV import capabilities',
+    'summary': 'Manage measurement data from devices with CSV import capability',
     'description': """
         Measurement Data Management Module
         ==================================
         
-        This module provides comprehensive measurement data management capabilities:
+        This module provides measurement data management.
         
         Key Features:
         * Device management with serial numbers and types
         * Manual measurement record entry
-        * CSV import functionality for bulk data
+        * CSV import for data
         * Advanced search and filtering
-        * Excel/PDF export capabilities
-        * Reporting and analytics
-        
+        * Excel/PDF export capability
     """,
     'author': 'Yasaman Rashida',
     'depends': ['base', 'mail', 'web'],
