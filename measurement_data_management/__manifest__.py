@@ -6,9 +6,7 @@
     'description': """
         Measurement Data Management Module
         ==================================
-        
-        This module provides measurement data management.
-        
+                
         Key Features:
         * Device management with serial numbers and types
         * Manual measurement record entry
