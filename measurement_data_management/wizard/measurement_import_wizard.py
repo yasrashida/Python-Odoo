@@ -107,7 +107,6 @@ class MeasurementImportWizard(models.TransientModel):
             # Generate import session ID
             import_session_id = f"import_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
-            # Import data
             created_records = []
             errors = []
             
@@ -120,7 +119,6 @@ class MeasurementImportWizard(models.TransientModel):
                 except Exception as e:
                     errors.append(f"Row {row_num}: {str(e)}")
             
-            # Generate summary
             summary_lines = [
                 f"Import completed: {self.name}",
                 f"File: {self.filename}",
@@ -138,7 +136,6 @@ class MeasurementImportWizard(models.TransientModel):
             self.import_summary = '\\n'.join(summary_lines)
             self.state = 'done'
             
-            # Log import
             _logger.info(f"CSV import completed: {len(created_records)} records created, {len(errors)} errors")
             
         except Exception as e:
@@ -161,7 +158,6 @@ class MeasurementImportWizard(models.TransientModel):
         if header:
             row_dict = dict(zip(header, row))
             
-            # Extract data from named columns
             device_name = row_dict.get('device') or row_dict.get('device_name')
             serial_number = row_dict.get('serial_number') or row_dict.get('serial')
             measurement_date = row_dict.get('date') or row_dict.get('measurement_date') or row_dict.get('timestamp')
@@ -171,7 +167,6 @@ class MeasurementImportWizard(models.TransientModel):
             notes = row_dict.get('notes') or row_dict.get('comment')
             
         else:
-            # Use positional mapping: device, date, value, unit, operator, notes
             device_name = row[0] if len(row) > 0 else None
             serial_number = None
             measurement_date = row[1] if len(row) > 1 else None
@@ -197,10 +192,8 @@ class MeasurementImportWizard(models.TransientModel):
         if not device:
             raise ValidationError(_('Device not found: %s') % (device_name or 'Unknown'))
         
-        # Parse measurement date
         if measurement_date and measurement_date.strip():
             try:
-                # Try different date formats
                 date_formats = [
                     '%Y-%m-%d %H:%M:%S',
                     '%Y-%m-%d %H:%M',
@@ -230,7 +223,6 @@ class MeasurementImportWizard(models.TransientModel):
         else:
             measurement_date = fields.Datetime.now()
         
-        # Parse value
         if not value or not str(value).strip():
             raise ValidationError(_('Measurement value is required'))
         
