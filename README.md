@@ -1,6 +1,6 @@
 # Measurement Data Management Module
 
-This Odoo 16 module helps companies manage and analyze measurement data.
+This Odoo 16 module helps companies to manage and analyze measurement data.
 
 ## Key Features
 

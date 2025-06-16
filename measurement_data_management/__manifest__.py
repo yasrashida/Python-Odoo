@@ -1,6 +1,6 @@
 {
     'name': 'Measurement Data Management',
-    'version': '16.0.0.0.0',
+    'version': '16.0.0.1.2',
     'category': 'Manufacturing',
     'summary': 'Manage measurement data from devices with CSV import capability',
     'description': """

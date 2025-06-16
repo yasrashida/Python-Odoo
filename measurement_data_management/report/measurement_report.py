@@ -206,7 +206,7 @@ class MeasurementAnalysisWizard(models.TransientModel):
         if not records:
             raise UserError(_('No measurement records found for the selected criteria.'))
         
-        # Generate report based on type
+        # Generate report based on type of report
         if self.report_type == 'summary':
             return self._generate_summary_report(records)
         elif self.report_type == 'detailed':
